@@ -1,3 +1,5 @@
+DebugMode: false
+
 Jobs:
   Woodcutter:
     Skills:

@@ -19,25 +19,36 @@ public class JobsListener implements Listener {
 
     @EventHandler
     public void onJobsExpGain(JobsPrePaymentEvent event) {
-        if (event.getAmount() == 0 && event.getPoints() == 0) return; // Unsure if this will ever be true
+        boolean debug = main.getConfig().getBoolean("DebugMode");
+
+        if (event.getAmount() == 0 && event.getPoints() == 0) {
+            if (debug) {
+                main.getLogger().info("====================================================");
+                main.getLogger().info("Income and Points are set to 0! Is your job configured correctly?");
+            }
+
+            return;
+        }
 
         McMMOPlayer mmoPlayer = UserManager.getPlayer(event.getPlayer().getPlayer());
-        if (mmoPlayer == null) return;
-
-        if (event.getJob() == null) {
-            System.out.println("Job is null!");
+        if (mmoPlayer == null) {
+            if (debug) main.getLogger().info("mcMMO player is not loaded! This is not an issue, but plugin multipliers will not apply until it is loaded!");
             return;
-        } else {
-            System.out.println("Job is not null!");
         }
 
         String jobName = event.getJob().getName();
 
         ConfigurationSection section = main.getConfig().getConfigurationSection("Jobs." + jobName);
-        if (section == null) return;
+        if (section == null) {
+            if (debug) main.getLogger().info("This job is not listed in this plugin's config! Not applying multiplier.");
+            return;
+        }
 
         List<String> skills = section.getStringList("Skills");
-        if (skills.isEmpty()) return;
+        if (skills.isEmpty()) {
+            if (debug) main.getLogger().info("This job is configured but no mcMMO skills are listed for this job! Not applying multiplier.");
+            return;
+        }
 
         String targetType = section.getString("TargetType");
 
@@ -81,6 +92,13 @@ public class JobsListener implements Listener {
         }
 
         double multiplier = mapRange(skillMin, skillMax, multMin, multMax, targetLevel);
+
+        if (debug) {
+            main.getLogger().info("Debug - Job: [" + event.getJob().getName() + "], OldAmount: [" + event.getAmount() + "], NewAmount: ["
+                    + event.getAmount() * multiplier + "], OldPoints: [" + event.getPoints() + "], NewPoints: [" + event.getPoints() * multiplier
+                    + "], Multiplier: [" + String.format("%.2f", multiplier) + "], Player: [" + event.getPlayer().getName() + "]");
+            main.getLogger().info("====================================================");
+        }
 
         event.setAmount(event.getAmount() * multiplier);
         event.setPoints(event.getPoints() * multiplier);

@@ -10,6 +10,6 @@ public final class McMMoJobsBridge extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new JobsListener(this), this);
 
-        getCommand("mjb").setExecutor(new MJBCommand());
+        getCommand("mjb").setExecutor(new MJBCommand(this));
     }
 }
