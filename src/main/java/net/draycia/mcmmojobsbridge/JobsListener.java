@@ -76,6 +76,10 @@ public class JobsListener implements Listener {
             targetLevel = highestLevel;
         }
 
+        if (targetLevel == 0) {
+            targetLevel = section.getInt("EnforceMinimum");
+        }
+
         double multiplier = mapRange(skillMin, skillMax, multMin, multMax, targetLevel);
 
         event.setAmount(event.getAmount() * multiplier);

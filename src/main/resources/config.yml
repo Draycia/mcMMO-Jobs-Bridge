@@ -7,6 +7,7 @@ Jobs:
     SkillMax: 1000
     MultMin: 0.5
     MultMax: 2.0
+    EnforceMinimum: 100
   Miner:
     Skills:
       - Mining
@@ -15,6 +16,7 @@ Jobs:
     SkillMax: 1000
     MultMin: 0.5
     MultMax: 2.0
+    EnforceMinimum: 100
   Builder:
     Skills: []
     TargetType: Highest
@@ -22,6 +24,7 @@ Jobs:
     SkillMax: 1000
     MultMin: 0.5
     MultMax: 2.0
+    EnforceMinimum: 100
   Digger:
     Skills:
       - Excavation
@@ -30,6 +33,7 @@ Jobs:
     SkillMax: 1000
     MultMin: 0.5
     MultMax: 2.0
+    EnforceMinimum: 100
   Farmer:
     Skills:
       - Herbalism
@@ -38,6 +42,7 @@ Jobs:
     SkillMax: 1000
     MultMin: 0.5
     MultMax: 2.0
+    EnforceMinimum: 100
   Hunter:
     Skills:
       - Swords
@@ -49,6 +54,7 @@ Jobs:
     SkillMax: 1000
     MultMin: 0.5
     MultMax: 2.0
+    EnforceMinimum: 100
   Explorer:
     Skills:
       - Acrobatics
@@ -57,6 +63,7 @@ Jobs:
     SkillMax: 1000
     MultMin: 0.5
     MultMax: 2.0
+    EnforceMinimum: 100
   Crafter:
     Skills: []
     TargetType: Highest
@@ -64,6 +71,7 @@ Jobs:
     SkillMax: 1000
     MultMin: 0.5
     MultMax: 2.0
+    EnforceMinimum: 100
   Fisherman:
     Skills:
       - Fishing
@@ -72,6 +80,7 @@ Jobs:
     SkillMax: 1000
     MultMin: 0.5
     MultMax: 2.0
+    EnforceMinimum: 100
   Weaponsmith:
     Skills:
       - Repair
@@ -80,6 +89,7 @@ Jobs:
     SkillMax: 1000
     MultMin: 0.5
     MultMax: 2.0
+    EnforceMinimum: 100
   Brewer:
     Skills:
       - Alchemy
@@ -88,6 +98,7 @@ Jobs:
     SkillMax: 1000
     MultMin: 0.5
     MultMax: 2.0
+    EnforceMinimum: 100
   Enchanter:
     Skills: []
     TargetType: Highest
@@ -95,3 +106,4 @@ Jobs:
     SkillMax: 1000
     MultMin: 0.5
     MultMax: 2.0
+    EnforceMinimum: 100
