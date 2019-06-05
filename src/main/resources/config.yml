@@ -1,0 +1,97 @@
+Jobs:
+  Woodcutter:
+    Skills:
+      - Woodcutting
+    TargetType: Highest
+    SkillMin: 0
+    SkillMax: 1000
+    MultMin: 0.5
+    MultMax: 2.0
+  Miner:
+    Skills:
+      - Mining
+    TargetType: Highest
+    SkillMin: 0
+    SkillMax: 1000
+    MultMin: 0.5
+    MultMax: 2.0
+  Builder:
+    Skills: []
+    TargetType: Highest
+    SkillMin: 0
+    SkillMax: 1000
+    MultMin: 0.5
+    MultMax: 2.0
+  Digger:
+    Skills:
+      - Excavation
+    TargetType: Highest
+    SkillMin: 0
+    SkillMax: 1000
+    MultMin: 0.5
+    MultMax: 2.0
+  Farmer:
+    Skills:
+      - Herbalism
+    TargetType: Highest
+    SkillMin: 0
+    SkillMax: 1000
+    MultMin: 0.5
+    MultMax: 2.0
+  Hunter:
+    Skills:
+      - Swords
+      - Axes
+      - Archery
+      - Unarmed
+    TargetType: Highest
+    SkillMin: 0
+    SkillMax: 1000
+    MultMin: 0.5
+    MultMax: 2.0
+  Explorer:
+    Skills:
+      - Acrobatics
+    TargetType: Highest
+    SkillMin: 0
+    SkillMax: 1000
+    MultMin: 0.5
+    MultMax: 2.0
+  Crafter:
+    Skills: []
+    TargetType: Highest
+    SkillMin: 0
+    SkillMax: 1000
+    MultMin: 0.5
+    MultMax: 2.0
+  Fisherman:
+    Skills:
+      - Fishing
+    TargetType: Highest
+    SkillMin: 0
+    SkillMax: 1000
+    MultMin: 0.5
+    MultMax: 2.0
+  Weaponsmith:
+    Skills:
+      - Repair
+    TargetType: Highest
+    SkillMin: 0
+    SkillMax: 1000
+    MultMin: 0.5
+    MultMax: 2.0
+  Brewer:
+    Skills:
+      - Alchemy
+    TargetType: Highest
+    SkillMin: 0
+    SkillMax: 1000
+    MultMin: 0.5
+    MultMax: 2.0
+  Enchanter:
+    Skills: []
+    TargetType: Highest
+    SkillMin: 0
+    SkillMax: 1000
+    MultMin: 0.5
+    MultMax: 2.0
