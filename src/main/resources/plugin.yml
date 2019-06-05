@@ -3,3 +3,6 @@ version: ${project.version}
 main: net.draycia.mcmmojobsbridge.McMMoJobsBridge
 api-version: 1.13
 depend: [Jobs, mcMMO]
+commands:
+  mjb:
+    usage: /mjb reload
