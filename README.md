@@ -9,7 +9,7 @@ Current features:
 - Setting the lower and upper multipliers
 - Setting skill ranges for calculation
 - Enforcing a minimum skill level, if the player's skill level is lower than this, it is automatically increased when calculating the multiplier.
+- Reloading of the config
 
 Planned features:
-- Reloading of the config
-- Automatic saving of the default config
+- Debug move
