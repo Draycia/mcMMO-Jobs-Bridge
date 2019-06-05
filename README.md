@@ -10,6 +10,4 @@ Current features:
 - Setting skill ranges for calculation
 - Enforcing a minimum skill level, if the player's skill level is lower than this, it is automatically increased when calculating the multiplier.
 - Reloading of the config
-
-Planned features:
-- Debug move
+- Debug mode
