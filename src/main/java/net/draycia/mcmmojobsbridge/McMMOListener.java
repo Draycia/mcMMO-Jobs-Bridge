@@ -1,8 +1,10 @@
 package net.draycia.mcmmojobsbridge;
 
-import com.gamingmesh.jobs.api.JobsPrePaymentEvent;
+import com.gamingmesh.jobs.Jobs;
+import com.gamingmesh.jobs.container.Job;
+import com.gamingmesh.jobs.container.JobsPlayer;
 import com.gmail.nossr50.datatypes.player.McMMOPlayer;
-import com.gmail.nossr50.datatypes.skills.PrimarySkillType;
+import com.gmail.nossr50.events.experience.McMMOPlayerXpGainEvent;
 import com.gmail.nossr50.util.player.UserManager;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
@@ -10,21 +12,21 @@ import org.bukkit.event.Listener;
 
 import java.util.List;
 
-public class JobsListener implements Listener {
+public class McMMOListener implements Listener {
     private McMMOJobsBridge main;
 
-    JobsListener(McMMOJobsBridge main) {
+    McMMOListener(McMMOJobsBridge main) {
         this.main = main;
     }
 
     @EventHandler
-    public void onJobsExpGain(JobsPrePaymentEvent event) {
+    public void onMcmmoExp(McMMOPlayerXpGainEvent event) {
         boolean debug = main.getConfig().getBoolean("DebugMode");
 
-        if (event.getAmount() == 0 && event.getPoints() == 0) {
+        if (event.getRawXpGained() == 0) {
             if (debug) {
                 main.getLogger().info("====================================================");
-                main.getLogger().info("Income and Points are set to 0! Is your job configured correctly?");
+                main.getLogger().info("mcMMO - XP gained is set to 0!");
             }
 
             return;
@@ -36,24 +38,24 @@ public class JobsListener implements Listener {
             return;
         }
 
-        String jobName = event.getJob().getName();
+        String skillName = event.getSkill().getName();
 
-        ConfigurationSection section = main.getConfig().getConfigurationSection("Jobs." + jobName);
+        ConfigurationSection section = main.getConfig().getConfigurationSection("Skills." + skillName);
         if (section == null) {
-            if (debug) main.getLogger().info("This job is not listed in this plugin's config! Not applying multiplier.");
+            if (debug) main.getLogger().info("This skill is not listed in this plugin's config! Not applying multiplier.");
             return;
         }
 
-        List<String> skills = section.getStringList("Skills");
-        if (skills.isEmpty()) {
-            if (debug) main.getLogger().info("This job is configured but no mcMMO skills are listed for this job! Not applying multiplier.");
+        List<String> jobs = section.getStringList("Jobs");
+        if (jobs.isEmpty()) {
+            if (debug) main.getLogger().info("This skill is configured but no Jobs are listed for this job! Not applying multiplier.");
             return;
         }
 
         String targetType = section.getString("TargetType");
 
-        int skillMin = section.getInt("SkillMin");
-        int skillMax = section.getInt("SkillMax");
+        int levelMin = section.getInt("LevelMin");
+        int levelMax = section.getInt("LevelMax");
         int multMin = section.getInt("MultMin");
         int multMax = section.getInt("MultMax");
 
@@ -61,11 +63,14 @@ public class JobsListener implements Listener {
         int totalLevel = 0;
         int highestLevel = 0;
 
-        for (String skill : skills) {
-            PrimarySkillType skillType = PrimarySkillType.getSkill(skill);
-            if (skillType == null) continue;
+        for (String job : jobs) {
+            Job jobInstance = Jobs.getJob(job);
+            if (jobInstance == null) continue;
 
-            int level = mmoPlayer.getSkillLevel(skillType);
+            JobsPlayer player = Jobs.getPlayerManager().getJobsPlayer(event.getPlayer().getUniqueId());
+            if (player == null) continue;
+
+            int level = player.getJobProgression(jobInstance).getLevel();
 
             if (level > 0) {
                 if (targetType == null || targetType.equalsIgnoreCase("Average")) {
@@ -82,7 +87,7 @@ public class JobsListener implements Listener {
         }
 
         if (targetType == null || targetType.equalsIgnoreCase("Average")) {
-            targetLevel = totalLevel / skills.size();
+            targetLevel = totalLevel / jobs.size();
         } else if (targetType.equalsIgnoreCase("Highest")) {
             targetLevel = highestLevel;
         }
@@ -91,16 +96,15 @@ public class JobsListener implements Listener {
             targetLevel = section.getInt("EnforceMinimum");
         }
 
-        double multiplier = McMMOJobsBridge.mapRange(skillMin, skillMax, multMin, multMax, targetLevel);
+        float multiplier = McMMOJobsBridge.mapRange(levelMin, levelMax, multMin, multMax, targetLevel);
 
         if (debug) {
-            main.getLogger().info("Debug - Job: [" + event.getJob().getName() + "], OldAmount: [" + event.getAmount() + "], NewAmount: ["
-                    + event.getAmount() * multiplier + "], OldPoints: [" + event.getPoints() + "], NewPoints: [" + event.getPoints() * multiplier
-                    + "], Multiplier: [" + String.format("%.2f", multiplier) + "], Player: [" + event.getPlayer().getName() + "]");
+            main.getLogger().info("Debug - mcMMO: [" + event.getSkill().getName() + "], OldXP: [" + event.getRawXpGained() + "], NewXP: ["
+                    + event.getRawXpGained() * multiplier + "], Multiplier: [" + String.format("%.2f", multiplier) + "], Player: ["
+                    + event.getPlayer().getName() + "]");
             main.getLogger().info("====================================================");
         }
 
-        event.setAmount(event.getAmount() * multiplier);
-        event.setPoints(event.getPoints() * multiplier);
+        event.setRawXpGained(event.getRawXpGained() * multiplier);
     }
 }

@@ -7,9 +7,9 @@ import org.bukkit.command.CommandSender;
 
 public class MJBCommand implements CommandExecutor {
 
-    private McMMoJobsBridge main;
+    private McMMOJobsBridge main;
 
-    MJBCommand(McMMoJobsBridge main) {
+    MJBCommand(McMMOJobsBridge main) {
         this.main = main;
     }
 

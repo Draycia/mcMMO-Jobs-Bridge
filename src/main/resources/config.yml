@@ -1,5 +1,119 @@
 DebugMode: false
 
+ModifySkills: true
+ModifyJobs: false
+
+# Taming is not included
+Skills:
+  Acrobatics:
+    Jobs:
+      - Explorer
+    TargetType: Highest
+    LevelMin: 0
+    LevelMax: 100
+    MultMin: 0.5
+    MultMax: 2.0
+    EnforceMinimum: 10
+  Alchemy:
+    Jobs:
+      - Brewer
+    TargetType: Highest
+    LevelMin: 0
+    LevelMax: 100
+    MultMin: 0.5
+    MultMax: 2.0
+    EnforceMinimum: 10
+  Archery:
+    Jobs:
+      - Hunter
+    TargetType: Highest
+    LevelMin: 0
+    LevelMax: 100
+    MultMin: 0.5
+    MultMax: 2.0
+    EnforceMinimum: 10
+  Axes:
+    Jobs:
+      - Hunter
+    TargetType: Highest
+    LevelMin: 0
+    LevelMax: 100
+    MultMin: 0.5
+    MultMax: 2.0
+    EnforceMinimum: 10
+  Excavation:
+    Jobs:
+      - Digger
+    TargetType: Highest
+    LevelMin: 0
+    LevelMax: 100
+    MultMin: 0.5
+    MultMax: 2.0
+    EnforceMinimum: 10
+  Fishing:
+    Jobs:
+      - Fisherman
+    TargetType: Highest
+    LevelMin: 0
+    LevelMax: 100
+    MultMin: 0.5
+    MultMax: 2.0
+    EnforceMinimum: 10
+  Herbalism:
+    Jobs:
+      - Farmer
+    TargetType: Highest
+    LevelMin: 0
+    LevelMax: 100
+    MultMin: 0.5
+    MultMax: 2.0
+    EnforceMinimum: 10
+  Mining:
+    Jobs:
+      - Miner
+    TargetType: Highest
+    LevelMin: 0
+    LevelMax: 100
+    MultMin: 0.5
+    MultMax: 2.0
+    EnforceMinimum: 10
+  Repair:
+    Jobs:
+      - Blacksmith
+    TargetType: Highest
+    LevelMin: 0
+    LevelMax: 100
+    MultMin: 0.5
+    MultMax: 2.0
+    EnforceMinimum: 10
+  Swords:
+    Jobs:
+      - Hunter
+    TargetType: Highest
+    LevelMin: 0
+    LevelMax: 100
+    MultMin: 0.5
+    MultMax: 2.0
+    EnforceMinimum: 10
+  Unarmed:
+    Jobs:
+      - Hunter
+    TargetType: Highest
+    LevelMin: 0
+    LevelMax: 100
+    MultMin: 0.5
+    MultMax: 2.0
+    EnforceMinimum: 10
+  Woodcutting:
+    Jobs:
+      - Woodcutter
+    TargetType: Highest
+    LevelMin: 0
+    LevelMax: 100
+    MultMin: 0.5
+    MultMax: 2.0
+    EnforceMinimum: 10
+
 Jobs:
   Woodcutter:
     Skills:

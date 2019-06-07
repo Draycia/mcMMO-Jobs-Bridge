@@ -1,6 +1,6 @@
 name: mcMMoJobsBridge
 version: ${project.version}
-main: net.draycia.mcmmojobsbridge.McMMoJobsBridge
+main: net.draycia.mcmmojobsbridge.McMMOJobsBridge
 api-version: 1.13
 depend: [Jobs, mcMMO]
 commands:
