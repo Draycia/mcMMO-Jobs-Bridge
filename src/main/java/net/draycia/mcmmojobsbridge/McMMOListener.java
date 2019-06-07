@@ -7,6 +7,7 @@ import com.gmail.nossr50.datatypes.player.McMMOPlayer;
 import com.gmail.nossr50.events.experience.McMMOPlayerXpGainEvent;
 import com.gmail.nossr50.util.player.UserManager;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -21,6 +22,8 @@ public class McMMOListener implements Listener {
 
     @EventHandler
     public void onMcmmoExp(McMMOPlayerXpGainEvent event) {
+        if (!main.getConfig().getBoolean("ModifySkills")) return;
+
         boolean debug = main.getConfig().getBoolean("DebugMode");
 
         if (event.getRawXpGained() == 0) {
@@ -32,24 +35,35 @@ public class McMMOListener implements Listener {
             return;
         }
 
-        McMMOPlayer mmoPlayer = UserManager.getPlayer(event.getPlayer().getPlayer());
-        if (mmoPlayer == null) {
-            if (debug) main.getLogger().info("mcMMO player is not loaded! This is not an issue, but plugin multipliers will not apply until it is loaded!");
-            return;
+        float multiplier = getMultiplier(main, debug, event.getPlayer().getPlayer(), event.getSkill().getName());
+
+        if (debug) {
+            main.getLogger().info("Debug - mcMMO: [" + event.getSkill().getName() + "], OldXP: [" + event.getRawXpGained() + "], NewXP: ["
+                    + event.getRawXpGained() * multiplier + "], Multiplier: [" + String.format("%.2f", multiplier) + "], Player: ["
+                    + event.getPlayer().getName() + "]");
+            main.getLogger().info("====================================================");
         }
 
-        String skillName = event.getSkill().getName();
+        event.setRawXpGained(event.getRawXpGained() * multiplier);
+    }
+
+    public static float getMultiplier(McMMOJobsBridge main, boolean debug, Player player, String skillName) {
+        McMMOPlayer mmoPlayer = UserManager.getPlayer(player);
+        if (mmoPlayer == null) {
+            if (debug) main.getLogger().info("mcMMO player is not loaded! This is not an issue, but plugin multipliers will not apply until it is loaded!");
+            return 0f;
+        }
 
         ConfigurationSection section = main.getConfig().getConfigurationSection("Skills." + skillName);
         if (section == null) {
             if (debug) main.getLogger().info("This skill is not listed in this plugin's config! Not applying multiplier.");
-            return;
+            return 0f;
         }
 
         List<String> jobs = section.getStringList("Jobs");
         if (jobs.isEmpty()) {
             if (debug) main.getLogger().info("This skill is configured but no Jobs are listed for this job! Not applying multiplier.");
-            return;
+            return 0f;
         }
 
         String targetType = section.getString("TargetType");
@@ -67,10 +81,10 @@ public class McMMOListener implements Listener {
             Job jobInstance = Jobs.getJob(job);
             if (jobInstance == null) continue;
 
-            JobsPlayer player = Jobs.getPlayerManager().getJobsPlayer(event.getPlayer().getUniqueId());
-            if (player == null) continue;
+            JobsPlayer jobsPlayer = Jobs.getPlayerManager().getJobsPlayer(player.getUniqueId());
+            if (jobsPlayer == null) continue;
 
-            int level = player.getJobProgression(jobInstance).getLevel();
+            int level = jobsPlayer.getJobProgression(jobInstance).getLevel();
 
             if (level > 0) {
                 if (targetType == null || targetType.equalsIgnoreCase("Average")) {
@@ -96,15 +110,6 @@ public class McMMOListener implements Listener {
             targetLevel = section.getInt("EnforceMinimum");
         }
 
-        float multiplier = McMMOJobsBridge.mapRange(levelMin, levelMax, multMin, multMax, targetLevel);
-
-        if (debug) {
-            main.getLogger().info("Debug - mcMMO: [" + event.getSkill().getName() + "], OldXP: [" + event.getRawXpGained() + "], NewXP: ["
-                    + event.getRawXpGained() * multiplier + "], Multiplier: [" + String.format("%.2f", multiplier) + "], Player: ["
-                    + event.getPlayer().getName() + "]");
-            main.getLogger().info("====================================================");
-        }
-
-        event.setRawXpGained(event.getRawXpGained() * multiplier);
+        return McMMOJobsBridge.mapRange(levelMin, levelMax, multMin, multMax, targetLevel);
     }
 }

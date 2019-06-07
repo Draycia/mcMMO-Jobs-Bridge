@@ -15,7 +15,7 @@ public class MJBCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
+        if (args.length > 0 && args[0].equalsIgnoreCase("reload") && sender.hasPermission("mjb.reload")) {
             main.reloadConfig();
 
             String message = "&amcMMO-Jobs-Bridge successfully reloaded!";

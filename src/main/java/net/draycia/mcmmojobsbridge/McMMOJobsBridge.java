@@ -1,5 +1,6 @@
 package net.draycia.mcmmojobsbridge;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -17,14 +18,14 @@ public final class McMMOJobsBridge extends JavaPlugin {
 
         saveDefaultConfig();
 
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            PlaceholderAPI.registerExpansion(new MJBPlaceholders(this));
+        }
+
         getServer().getPluginManager().registerEvents(new JobsListener(this), this);
         getServer().getPluginManager().registerEvents(new McMMOListener(this), this);
 
         getCommand("mjb").setExecutor(new MJBCommand(this));
-    }
-
-    static double mapRange(double a1, double a2, double b1, double b2, double s){
-        return b1 + ((s - a1)*(b2 - b1))/(a2 - a1);
     }
 
     static float mapRange(float a1, float a2, float b1, float b2, float s){
