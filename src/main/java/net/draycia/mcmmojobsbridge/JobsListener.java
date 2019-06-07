@@ -69,8 +69,8 @@ public class JobsListener implements Listener {
 
         int skillMin = section.getInt("SkillMin");
         int skillMax = section.getInt("SkillMax");
-        int multMin = section.getInt("MultMin");
-        int multMax = section.getInt("MultMax");
+        double multMin = section.getDouble("MultMin");
+        double multMax = section.getDouble("MultMax");
 
         int targetLevel = 0;
         int totalLevel = 0;
@@ -104,6 +104,11 @@ public class JobsListener implements Listener {
 
         if (targetLevel == 0) {
             targetLevel = section.getInt("EnforceMinimum");
+        }
+
+        if (debug) {
+            main.getLogger().info("SkillMin: [" + skillMin + "], SkillMax: [" + skillMax + "], MultMin: [" +
+                    multMin + "], MultMax: [" + multMax + "], TargetLevel: [" + targetLevel + "]");
         }
 
         return McMMOJobsBridge.mapRange(skillMin, skillMax, multMin, multMax, targetLevel);

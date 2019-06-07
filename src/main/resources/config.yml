@@ -1,7 +1,7 @@
 DebugMode: false
 
 ModifySkills: true
-ModifyJobs: false
+ModifyJobs: true
 
 # Taming is not included
 Skills:

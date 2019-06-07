@@ -35,7 +35,7 @@ public class McMMOListener implements Listener {
             return;
         }
 
-        float multiplier = getMultiplier(main, debug, event.getPlayer().getPlayer(), event.getSkill().getName());
+        double multiplier = getMultiplier(main, debug, event.getPlayer().getPlayer(), event.getSkill().getName());
 
         if (debug) {
             main.getLogger().info("Debug - mcMMO: [" + event.getSkill().getName() + "], OldXP: [" + event.getRawXpGained() + "], NewXP: ["
@@ -44,10 +44,10 @@ public class McMMOListener implements Listener {
             main.getLogger().info("====================================================");
         }
 
-        event.setRawXpGained(event.getRawXpGained() * multiplier);
+        event.setRawXpGained((float)(event.getRawXpGained() * multiplier));
     }
 
-    public static float getMultiplier(McMMOJobsBridge main, boolean debug, Player player, String skillName) {
+    public static double getMultiplier(McMMOJobsBridge main, boolean debug, Player player, String skillName) {
         McMMOPlayer mmoPlayer = UserManager.getPlayer(player);
         if (mmoPlayer == null) {
             if (debug) main.getLogger().info("mcMMO player is not loaded! This is not an issue, but plugin multipliers will not apply until it is loaded!");
@@ -70,8 +70,8 @@ public class McMMOListener implements Listener {
 
         int levelMin = section.getInt("LevelMin");
         int levelMax = section.getInt("LevelMax");
-        int multMin = section.getInt("MultMin");
-        int multMax = section.getInt("MultMax");
+        double multMin = section.getDouble("MultMin");
+        double multMax = section.getDouble("MultMax");
 
         int targetLevel = 0;
         int totalLevel = 0;
@@ -108,6 +108,11 @@ public class McMMOListener implements Listener {
 
         if (targetLevel == 0) {
             targetLevel = section.getInt("EnforceMinimum");
+        }
+
+        if (debug) {
+            main.getLogger().info("LevelMin: [" + levelMin + "], LevelMax: [" + levelMax + "], MultMin: [" +
+                    multMin + "], MultMax: [" + multMax + "], TargetLevel: [" + targetLevel + "]");
         }
 
         return McMMOJobsBridge.mapRange(levelMin, levelMax, multMin, multMax, targetLevel);

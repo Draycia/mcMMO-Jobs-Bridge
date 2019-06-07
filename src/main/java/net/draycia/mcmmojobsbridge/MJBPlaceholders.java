@@ -42,7 +42,7 @@ public class MJBPlaceholders extends PlaceholderExpansion {
             if (args.length < 3) return null;
 
             return String.format("%.2f", McMMOListener.getMultiplier(main, false, player, args[2]));
-        } else if (identifier.equalsIgnoreCase("jobs_multiplier")) {
+        } else if (identifier.startsWith("jobs_multiplier_")) {
             String[] args = identifier.split("_");
             if (args.length < 3) return null;
 

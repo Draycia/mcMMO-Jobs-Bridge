@@ -28,7 +28,8 @@ public final class McMMOJobsBridge extends JavaPlugin {
         getCommand("mjb").setExecutor(new MJBCommand(this));
     }
 
-    static float mapRange(float a1, float a2, float b1, float b2, float s){
-        return b1 + ((s - a1)*(b2 - b1))/(a2 - a1);
+    // https://rosettacode.org/wiki/Map_range#Java
+    static double mapRange(float inputMin, float inputMax, double outputMin, double outputMax, float input){
+        return outputMin + ((input - inputMin) * (outputMax - outputMin)) / (inputMax - inputMin);
     }
 }
